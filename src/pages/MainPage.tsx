@@ -2,6 +2,7 @@ import Header from "@/sections/Header";
 import Footer from "@/sections/Footer";
 import ThreeExperience from "@/components/ThreeExperience";
 import MainBanner from "@/components/MainBanner";
+import  PremiumSlider  from "@/components/PremiumSlider/PremiumSlider";
 
 const MainPage = () => {
   return (
@@ -13,8 +14,10 @@ const MainPage = () => {
       <section style={{ padding: "50px 0", textAlign: "center" }}>
         <ThreeExperience />
       </section>
-
+      <PremiumSlider />
+      
       <Footer />
+    
     </>
   );
 };
