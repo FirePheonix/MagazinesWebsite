@@ -1,5 +1,4 @@
 import { motion } from "framer-motion";
-import { CiSearch } from "react-icons/ci";
 const MainBanner = () => {
   return (
     <div className="relative w-[96%] h-screen mx-auto overflow-hidden bg-white rounded-[20px]">
