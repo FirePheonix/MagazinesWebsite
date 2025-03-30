@@ -1,5 +1,5 @@
 import { Environment, Float, OrbitControls } from "@react-three/drei";
-import { Book } from "@/components/3DMagazineComponents/Book"; 
+import { Book } from "@/components/3DMagazineComponents/Book";
 import { FC } from "react";
 import { UI } from "@/components/3DMagazineComponents/UI";
 
