@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
-import './PremiumSlider.css';
+import '@/components/PremiumSlider/PremiumSlider.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight, faPlay, faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
