@@ -56,8 +56,12 @@ const Header: React.FC = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 md:h-20">
-            {/* Left-aligned Logo */}
-            <Link to="/" className="flex-shrink-0" onClick={handleNavigation}>
+            {/* Logo */}
+            <Link
+              to="/"
+              className="flex-shrink-0 flex items-center"
+              onClick={handleNavigation}
+            >
               <img
                 src={logo}
                 alt="Sugar Labs"
@@ -65,8 +69,38 @@ const Header: React.FC = () => {
               />
             </Link>
 
-            {/* Center-aligned Navigation */}
-            <nav className="hidden md:flex flex-1 justify-center whitespace-nowrap text-sm">
+            {/* Mobile menu toggle button */}
+            <button
+              className="md:hidden relative w-10 h-10 focus:outline-none z-50"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              aria-label="Toggle menu"
+              aria-expanded={isMobileMenuOpen}
+            >
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                <span
+                  className={`block w-6 h-0.5 bg-gray-600 transition-all duration-300 ${
+                    isMobileMenuOpen
+                      ? "rotate-45 translate-y-1.5"
+                      : "translate-y-[-4px]"
+                  }`}
+                />
+                <span
+                  className={`block w-6 h-0.5 bg-gray-600 transition-all duration-300 mt-1 ${
+                    isMobileMenuOpen ? "opacity-0" : ""
+                  }`}
+                />
+                <span
+                  className={`block w-6 h-0.5 bg-gray-600 transition-all duration-300 mt-1 ${
+                    isMobileMenuOpen
+                      ? "-rotate-45 -translate-y-1.5"
+                      : "translate-y-[4px]"
+                  }`}
+                />
+              </div>
+            </button>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex md:items-center whitespace-nowrap text-sm">
               {/* Dropdown menus */}
               {Object.entries(navigationData.dropdowns).map(
                 ([key, dropdown]) => (
@@ -94,18 +128,18 @@ const Header: React.FC = () => {
                   {link.label}
                 </Link>
               ))}
-            </nav>
 
-            {/* Right-aligned CTA Button */}
-            <Link
-              to="/try-sugar"
-              className="ml-auto inline-flex items-center px-4 lg:px-6 py-2 lg:py-2.5 rounded-full font-semibold text-white
+              {/* CTA Button */}
+              <Link
+                to="/try-sugar"
+                className="inline-flex items-center px-4 lg:px-6 py-2 lg:py-2.5 rounded-full font-semibold text-white
                    bg-[#E46A46] hover:bg-[#d65e3e] transition-all duration-300 transform hover:scale-105 hover:shadow-lg
                    focus:outline-none focus:ring-2 focus:ring-[#d65e3e] focus:ring-offset-2 text-sm lg:text-base"
-              onClick={handleNavigation}
-            >
-              SUBSCRIBE
-            </Link>
+                onClick={handleNavigation}
+              >
+                SUBSCRIBE
+              </Link>
+            </nav>
           </div>
         </div>
       </header>
@@ -243,7 +277,8 @@ const MobileNavDrawer: React.FC<{
                 to="/try-sugar"
                 onClick={onClose}
                 className="flex items-center justify-center px-6 py-3 rounded-xl font-semibold
-                        text-white bg-[#E46A46] hover:bg-[#d65e3e] transition-all duration-300 w-full"
+                        text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700
+                        hover:to-blue-800 transition-all duration-300 w-full"
               >
                 SUBSCRIBE
               </Link>
