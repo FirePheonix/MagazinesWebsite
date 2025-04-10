@@ -8,18 +8,18 @@ import { useAtom } from "jotai";
 import { pageAtom } from "./3DMagazineComponents/UI";
 
 const ThreeExperience = () => {
-  const [page] = useAtom(pageAtom); // Get current page index
+  const [page] = useAtom(pageAtom);
   const currentPage = pageContent[page] || {
     title1: "",
     text1: "",
     title2: "",
     text2: "",
-  }; // Avoid undefined errors
+  };
 
   return (
     <div
       style={{
-        width: "96%",
+        width: "85%",
         height: "500px",
         overflow: "hidden",
         border: "2px solid white",
@@ -58,21 +58,70 @@ const ThreeExperience = () => {
         }}
       >
         {/* Left Title */}
-        <div style={{ width: "45%", textAlign: "left", paddingLeft: "5%" }}>
-          <h2 style={{ fontSize: "1.5rem", marginBottom: "8px" }}>
+        <div
+          style={{
+            width: "45%",
+            textAlign: "left",
+            paddingLeft: "5%",
+          }}
+        >
+          <h2
+            style={{
+              fontSize: "1.7rem",
+              fontFamily: "'Georgia', serif",
+              fontWeight: 700,
+              marginBottom: "10px",
+              letterSpacing: "0.5px",
+              textShadow: "1px 1px 3px rgba(0,0,0,0.6)",
+            }}
+          >
             {currentPage.title1}
           </h2>
-          <p style={{ fontSize: "1rem", maxWidth: "90%" }}>
+          <p
+            style={{
+              fontSize: "1rem",
+              maxWidth: "90%",
+              lineHeight: "1.5",
+              color: "#dddddd",
+              fontWeight: 400,
+              textShadow: "0 1px 2px rgba(0,0,0,0.4)",
+            }}
+          >
             {currentPage.text1}
           </p>
         </div>
 
         {/* Right Title */}
-        <div style={{ width: "45%", textAlign: "right", paddingRight: "5%" }}>
-          <h2 style={{ fontSize: "1.5rem", marginBottom: "8px" }}>
+        <div
+          style={{
+            width: "45%",
+            textAlign: "right",
+            paddingRight: "5%",
+          }}
+        >
+          <h2
+            style={{
+              fontSize: "1.7rem",
+              fontFamily: "'Georgia', serif",
+              fontWeight: 700,
+              marginBottom: "10px",
+              letterSpacing: "0.5px",
+              textShadow: "1px 1px 3px rgba(0,0,0,0.6)",
+            }}
+          >
             {currentPage.title2}
           </h2>
-          <p style={{ fontSize: "1rem", maxWidth: "90%", marginLeft: "auto" }}>
+          <p
+            style={{
+              fontSize: "1rem",
+              maxWidth: "90%",
+              marginLeft: "auto",
+              lineHeight: "1.5",
+              color: "#dddddd",
+              fontWeight: 400,
+              textShadow: "0 1px 2px rgba(0,0,0,0.4)",
+            }}
+          >
             {currentPage.text2}
           </p>
         </div>
