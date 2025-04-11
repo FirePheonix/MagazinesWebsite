@@ -1,5 +1,5 @@
 import React from "react";
-import SpotlightCard from "@/components/spotlightCard";
+import SpotlightCard from "@/components/SpotlightCard";
 import { cards } from "@/constants/CardData";
 
 const CardGrid: React.FC = () => {

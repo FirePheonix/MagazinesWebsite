@@ -25,7 +25,7 @@ const MainBanner = () => {
       />
 
       {/* Magazine Title and Texts - Synced Block */}
-      <div className="absolute top-10 left-1/2 transform -translate-x-1/2 w-[93%] z-[5] flex flex-col items-center relative">
+      <div className="top-10 left-1/2 transform -translate-x-1/2 w-[93%] z-[5] flex flex-col items-center relative">
         {/* MAGAZINE Title Image */}
         <motion.img
           src="./images/MAGAZINE.png"

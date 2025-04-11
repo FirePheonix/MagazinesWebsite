@@ -15,9 +15,19 @@ import {
   SRGBColorSpace,
   Uint16BufferAttribute,
   Vector3,
+  Texture,
+  Material,
+  Group,
 } from "three";
 import { degToRad } from "three/src/math/MathUtils.js";
 import { pageAtom, pages } from "@/components/3DMagazineComponents/UI";
+
+// Define types for page data
+interface PageData {
+  front: string;
+  back: string;
+  [key: string]: any;
+}
 
 const easingFactor = 0.5; // Controls the speed of the easing
 const easingFactorFold = 0.3; // Controls the speed of the easing
@@ -43,8 +53,8 @@ pageGeometry.translate(PAGE_WIDTH / 2, 0, 0);
 
 const position = pageGeometry.attributes.position;
 const vertex = new Vector3();
-const skinIndexes = [];
-const skinWeights = [];
+const skinIndexes: number[] = [];
+const skinWeights: number[] = [];
 
 for (let i = 0; i < position.count; i++) {
   // ALL VERTICES
@@ -70,7 +80,7 @@ pageGeometry.setAttribute(
 const whiteColor = new Color("white");
 const emissiveColor = new Color("orange");
 
-const pageMaterials = [
+const pageMaterials: MeshStandardMaterial[] = [
   new MeshStandardMaterial({
     color: whiteColor,
   }),
@@ -85,29 +95,39 @@ const pageMaterials = [
   }),
 ];
 
-pages.forEach((page) => {
+pages.forEach((page: PageData) => {
   useTexture.preload(`/textures/${page.front}.jpg`);
   useTexture.preload(`/textures/${page.back}.jpg`);
   useTexture.preload(`/textures/book-cover-roughness.png`);
 });
 
-const Page = ({ number, front, back, page, opened, bookClosed, ...props }) => {
+interface PageProps {
+  number: number;
+  front: string;
+  back: string;
+  page: number;
+  opened: boolean;
+  bookClosed: boolean;
+  [key: string]: any;
+}
+
+const Page: React.FC<PageProps> = ({ number, front, back, page, opened, bookClosed, ...props }) => {
   const [picture, picture2, pictureRoughness] = useTexture([
     `/textures/${front}.jpg`,
     `/textures/${back}.jpg`,
     ...(number === 0 || number === pages.length - 1
       ? [`/textures/book-cover-roughness.png`]
       : []),
-  ]);
+  ]) as [Texture, Texture, Texture?];
   picture.colorSpace = picture2.colorSpace = SRGBColorSpace;
-  const group = useRef();
-  const turnedAt = useRef(0);
-  const lastOpened = useRef(opened);
+  const group = useRef<Group>(null);
+  const turnedAt = useRef<number>(0);
+  const lastOpened = useRef<boolean>(opened);
 
-  const skinnedMeshRef = useRef();
+  const skinnedMeshRef = useRef<SkinnedMesh>(null);
 
   const manualSkinnedMesh = useMemo(() => {
-    const bones = [];
+    const bones: Bone[] = [];
     for (let i = 0; i <= PAGE_SEGMENTS; i++) {
       let bone = new Bone();
       bones.push(bone);
@@ -122,7 +142,7 @@ const Page = ({ number, front, back, page, opened, bookClosed, ...props }) => {
     }
     const skeleton = new Skeleton(bones);
 
-    const materials = [
+    const materials: Material[] = [
       ...pageMaterials,
       new MeshStandardMaterial({
         color: whiteColor,
@@ -161,6 +181,7 @@ const Page = ({ number, front, back, page, opened, bookClosed, ...props }) => {
   }, []);
 
   // useHelper(skinnedMeshRef, SkeletonHelper, "red");
+  const [highlighted, setHighlighted] = useState<boolean>(false);
 
   useFrame((_, delta) => {
     if (!skinnedMeshRef.current) {
@@ -168,18 +189,18 @@ const Page = ({ number, front, back, page, opened, bookClosed, ...props }) => {
     }
 
     const emissiveIntensity = highlighted ? 0.22 : 0;
-    skinnedMeshRef.current.material[4].emissiveIntensity =
-      skinnedMeshRef.current.material[5].emissiveIntensity = MathUtils.lerp(
-        skinnedMeshRef.current.material[4].emissiveIntensity,
-        emissiveIntensity,
-        0.1,
-      );
+    const materials = skinnedMeshRef.current.material as MeshStandardMaterial[];
+    materials[4].emissiveIntensity = materials[5].emissiveIntensity = MathUtils.lerp(
+      materials[4].emissiveIntensity,
+      emissiveIntensity,
+      0.1,
+    );
 
     if (lastOpened.current !== opened) {
       turnedAt.current = +new Date();
       lastOpened.current = opened;
     }
-    let turningTime = Math.min(400, new Date() - turnedAt.current) / 400;
+    let turningTime = Math.min(400, new Date().getTime() - turnedAt.current) / 400;
     turningTime = Math.sin(turningTime * Math.PI);
 
     let targetRotation = opened ? -Math.PI / 2 : Math.PI / 2;
@@ -190,6 +211,8 @@ const Page = ({ number, front, back, page, opened, bookClosed, ...props }) => {
     const bones = skinnedMeshRef.current.skeleton.bones;
     for (let i = 0; i < bones.length; i++) {
       const target = i === 0 ? group.current : bones[i];
+      
+      if (!target) continue;
 
       const insideCurveIntensity = i < 8 ? Math.sin(i * 0.2 + 0.25) : 0;
       const outsideCurveIntensity = i >= 8 ? Math.cos(i * 0.3 + 0.09) : 0;
@@ -232,7 +255,6 @@ const Page = ({ number, front, back, page, opened, bookClosed, ...props }) => {
   });
 
   const [_, setPage] = useAtom(pageAtom);
-  const [highlighted, setHighlighted] = useState(false);
   useCursor(highlighted);
 
   return (
@@ -262,12 +284,16 @@ const Page = ({ number, front, back, page, opened, bookClosed, ...props }) => {
   );
 };
 
-export const Book = ({ ...props }) => {
+interface BookProps {
+  [key: string]: any;
+}
+
+export const Book: React.FC<BookProps> = ({ ...props }) => {
   const [page] = useAtom(pageAtom);
-  const [delayedPage, setDelayedPage] = useState(page);
+  const [delayedPage, setDelayedPage] = useState<number>(page);
 
   useEffect(() => {
-    let timeout;
+    let timeout: NodeJS.Timeout;
     const goToPage = () => {
       setDelayedPage((delayedPage) => {
         if (page === delayedPage) {
@@ -285,6 +311,7 @@ export const Book = ({ ...props }) => {
           if (page < delayedPage) {
             return delayedPage - 1;
           }
+          return delayedPage; // TypeScript requires a return in all code paths
         }
       });
     };
@@ -296,7 +323,7 @@ export const Book = ({ ...props }) => {
 
   return (
     <group {...props} rotation-y={-Math.PI / 2}>
-      {[...pages].map((pageData, index) => (
+      {[...pages].map((pageData: PageData, index: number) => (
         <Page
           key={index}
           page={delayedPage}
