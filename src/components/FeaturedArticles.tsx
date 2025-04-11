@@ -40,7 +40,7 @@ const articles: Article[] = [
       id: 1,
       title: "Inside IIIT Sonepat: Innovation at the Core",
       excerpt: "Explore how IIIT Sonepat fosters innovation and entrepreneurship through its student-led initiatives and mentorship programs.",
-      image: "/assets/FeaturedArticlesImages/TechnoCampus.jpg",
+      image: "/MagazinesWebsite/assets/FeaturedArticlesImages/TechnoCampus.jpg",
       category: "Campus Life",
       readTime: "6 min",
       featured: true
@@ -49,7 +49,7 @@ const articles: Article[] = [
       id: 2,
       title: "How IIIT Sonepat Students are Cracking Google and Amazon",
       excerpt: "A deep dive into the preparation strategies and placement stories of top-achieving students at IIIT Sonepat.",
-      image: "/assets/FeaturedArticlesImages/GoogleAmazon.jpg",
+      image: "/MagazinesWebsite/assets/FeaturedArticlesImages/GoogleAmazon.jpg",
       category: "Placements",
       readTime: "7 min"
     },
@@ -57,15 +57,15 @@ const articles: Article[] = [
       id: 3,
       title: "Festive Vibes: A Glimpse of Technika & Kalrav",
       excerpt: "From hackathons to cultural dance battles, discover how students balance code and culture at IIIT Sonepat.",
-      image: "/assets/FeaturedArticlesImages/Convocation.jpg",
+      image: "/MagazinesWebsite/assets/FeaturedArticlesImages/Convocation.jpg",
       category: "Events",
       readTime: "5 min"
     },
     {
       id: 4,
-      title: "IIIT Sonepat’s AI Club: Building the Future, Byte by Byte",
+      title: "IIIT Sonepat's AI Club: Building the Future, Byte by Byte",
       excerpt: "An inside look at one of the most active student communities working on real-world AI and ML projects.",
-      image: "/assets/FeaturedArticlesImages/TechnoClassroom.jpg",
+      image: "/MagazinesWebsite/assets/FeaturedArticlesImages/TechnoClassroom.jpg",
       category: "Clubs",
       readTime: "6 min"
     },
@@ -73,7 +73,7 @@ const articles: Article[] = [
       id: 5,
       title: "The Hostel Life: More Than Just Shared Rooms",
       excerpt: "Late-night coding, chai breaks, and bonding – experience hostel life through the lens of IIIT Sonepat students.",
-      image: "/assets/FeaturedArticlesImages/Classroom.jpg",
+      image: "/MagazinesWebsite/assets/FeaturedArticlesImages/Classroom.jpg",
       category: "Student Life",
       readTime: "4 min"
     },
@@ -81,15 +81,15 @@ const articles: Article[] = [
       id: 6,
       title: "From Sonepat to Silicon Valley: IIIT Alumni Speak",
       excerpt: "Success stories of alumni making it big globally and how their roots in IIIT Sonepat helped shape them.",
-      image: "/assets/FeaturedArticlesImages/IIITLogo.jpg",
+      image: "/MagazinesWebsite/assets/FeaturedArticlesImages/IIITLogo.jpg",
       category: "Alumni",
       readTime: "6 min"
     },
     {
       id: 7,
-      title: "The Startup Scene: IIIT Sonepat’s Budding Entrepreneurs",
+      title: "The Startup Scene: IIIT Sonepat's Budding Entrepreneurs",
       excerpt: "Meet the founders and teams behind the next big startups emerging from this tech-savvy campus.",
-      image: "/assets/FeaturedArticlesImages/Convocation.jpg",
+      image: "/MagazinesWebsite/assets/FeaturedArticlesImages/Convocation.jpg",
       category: "Entrepreneurship",
       readTime: "7 min",
       featured: true
@@ -98,15 +98,15 @@ const articles: Article[] = [
       id: 8,
       title: "Cracking GSoC from IIIT Sonepat: The Open Source Way",
       excerpt: "Discover how students at IIIT Sonepat are contributing to global projects through Google Summer of Code.",
-      image: "/assets/FeaturedArticlesImages/GoogleAmazon.jpg",
+      image: "/MagazinesWebsite/assets/FeaturedArticlesImages/GoogleAmazon.jpg",
       category: "Open Source",
       readTime: "5 min"
     },
     {
       id: 9,
       title: "Academic Rigour at IIIT Sonepat: Not Just Another Coding College",
-      excerpt: "The curriculum, faculty, and projects that make IIIT Sonepat stand out in India’s tech education space.",
-      image: "/assets/FeaturedArticlesImages/Classroom.jpg",
+      excerpt: "The curriculum, faculty, and projects that make IIIT Sonepat stand out in India's tech education space.",
+      image: "/MagazinesWebsite/assets/FeaturedArticlesImages/Classroom.jpg",
       category: "Academics",
       readTime: "6 min"
     },
@@ -114,7 +114,7 @@ const articles: Article[] = [
       id: 10,
       title: "Why IIIT Sonepat is One of the Fastest Growing IIITs",
       excerpt: "Explore the journey of IIIT Sonepat from a fledgling institution to a highly competitive engineering college.",
-      image: "/assets/FeaturedArticlesImages/IIITLogo.jpg",
+      image: "/MagazinesWebsite/assets/FeaturedArticlesImages/IIITLogo.jpg",
       category: "About IIIT",
       readTime: "5 min"
     }
@@ -158,7 +158,6 @@ const ArticleCard: React.FC<{ article: Article }> = ({ article }) => {
         article.featured && "md:col-span-2 md:flex-row"
       )}
     >
-      <h1></h1>
       <div
         className={cn(
           "relative h-60 overflow-hidden",
