@@ -138,9 +138,7 @@ const Footer = () => {
               {/* Organization Info */}
               <div className="p-4 sm:p-6 bg-gray-800/30 rounded-lg backdrop-blur-sm">
                 <p className="text-xs sm:text-sm leading-relaxed">
-                  Sugar Labs is a registered USA 501(c)(3) tax-exempt,
-                  not-for-profit organization, supported by our generous
-                  contributors and sponsors.
+                  BSP is the official Publications page for IIIT Sonepat.
                 </p>
               </div>
             </div>
