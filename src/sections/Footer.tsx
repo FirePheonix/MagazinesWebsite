@@ -119,7 +119,7 @@ const Footer = () => {
 
               {/* Contribute Link */}
               <a
-                href="https://github.com/sugarlabs/www-v2"
+                href="https://github.com/FirePheonix/MagazinesWebsite"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-gray-800/50 hover:bg-gray-700 
