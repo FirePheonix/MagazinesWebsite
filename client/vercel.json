@@ -7,10 +7,5 @@
     "env": {
       "SKIP_TYPE_CHECK": "true"
     }
-  },
-  "functions": {
-    "app/api/**/*.ts": {
-      "maxDuration": 10
-    }
   }
 } 
