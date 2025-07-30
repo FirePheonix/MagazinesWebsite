@@ -1,0 +1,11 @@
+# Backend Environment Variables (set in Vercel backend project)
+MONGO=mongodb+srv://username:password@cluster.mongodb.net/database
+CLERK_SECRET_KEY=sk_test_your_clerk_secret_key
+CLIENT_URL=https://your-frontend-project.vercel.app
+IK_YOUR_IMAGEKIT_PUBLIC_KEY=your_imagekit_public_key
+IK_YOUR_IMAGEKIT_PRIVATE_KEY=your_imagekit_private_key
+IK_YOUR_IMAGEKIT_URL_ENDPOINT=https://ik.imagekit.io/your_endpoint
+
+# Frontend Environment Variables (set in Vercel frontend project)
+VITE_CLERK_PUBLISHABLE_KEY=pk_test_your_clerk_publishable_key
+VITE_API_URL=https://your-backend-project.vercel.app 
