@@ -28,15 +28,6 @@ app.use(cors({
   credentials: true
 }));
 
-// Apply Clerk middleware
-app.use(clerkMiddleware());
-
-// 💡 This must come before express.json() to avoid conflict with raw body
-app.use("/webhooks", webHookRouter);
-
-// Then apply json parsing globally
-app.use(express.json({ limit: '50mb' }));  // Increased limit for image uploads
-
 // Standard CORS headers
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -46,33 +37,13 @@ app.use(function(req, res, next) {
     next();
 });
 
-// app.get("/auth-state", (req,res) => {
-//     const authState = req.auth;
-//     res.json(authState);
-// });
+// Then apply json parsing globally
+app.use(express.json({ limit: '50mb' }));  // Increased limit for image uploads
 
-// app.get("/protect", (req,res) => {
-//     const { userId } = req.auth;
-//     if(!userId){
-//         return res.status(401).json("not autheticated");
-//     }
+// Apply Clerk middleware only for webhooks
+app.use("/webhooks", clerkMiddleware(), webHookRouter);
 
-//     res.status(200).json("content");
-// });
-
-
-// automatically goes back to homepage if not AUTHETICATED
-// app.get("/protect2", requireAuth(), (req,res) => {
-//     const { userId } = req.auth;
-//     if(!userId){
-//         return res.status(401).json("not autheticated");
-//     }
-//     res.status(200).json("content");
-// });
-
-
-
-// API routes
+// API routes (without Clerk middleware for now)
 app.use("/users", userRouter);
 app.use("/posts", postRouter);
 app.use("/comments", commentRouter); 

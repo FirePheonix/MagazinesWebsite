@@ -13,7 +13,8 @@ export default defineConfig({
     },
   },
   build: {
-    // Ignore TypeScript errors during build
+    // Ensure assets are built correctly
+    assetsDir: 'assets',
     rollupOptions: {
       onwarn(warning, warn) {
         // Ignore TypeScript warnings
@@ -21,6 +22,11 @@ export default defineConfig({
           return;
         }
         warn(warning);
+      },
+      output: {
+        assetFileNames: 'assets/[name]-[hash][extname]',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
       }
     }
   },
