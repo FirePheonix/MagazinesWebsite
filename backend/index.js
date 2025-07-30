@@ -8,10 +8,10 @@ import webHookRouter from "./routes/webhook.route.js";
 import { clerkMiddleware } from '@clerk/express';
 import cors from "cors";
 
-// Load environment variables at the very beginning
+// Load environment variables
 dotenv.config();
 
-// Verify environment variables are loaded correctly
+// Environment variable check
 console.log("Environment check:");
 console.log("- MongoDB: ", process.env.MONGO ? "✓" : "✗");
 console.log("- Clerk Keys: ", process.env.CLERK_SECRET_KEY ? "✓" : "✗");
@@ -22,7 +22,7 @@ connectDB();
 
 const app = express();
 
-// Configure CORS to allow requests from frontend
+// Allowed frontend origins
 const allowedOrigins = [
   "http://localhost:5173",
   "http://localhost:3000",
@@ -30,15 +30,21 @@ const allowedOrigins = [
   "https://magazines-website.vercel.app"
 ];
 
+// Debug log to check incoming origin (optional)
+app.use((req, res, next) => {
+  console.log("Incoming request origin:", req.headers.origin);
+  next();
+});
+
+// CORS configuration
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.indexOf(origin) !== -1) {
+    // Allow requests with no origin (like mobile apps, curl, postman)
+    if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(new Error('Not allowed by CORS'));
+      console.error(`❌ CORS blocked request from: ${origin}`);
+      callback(new Error("Not allowed by CORS"));
     }
   },
   credentials: true,
@@ -46,33 +52,34 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
 
-// Then apply json parsing globally
-app.use(express.json({ limit: '50mb' }));  // Increased limit for image uploads
+// Middleware for JSON parsing
+app.use(express.json({ limit: '50mb' })); // Allow large payloads (e.g., images)
 
-// Apply Clerk middleware only for webhooks
+// Clerk webhooks (secured)
 app.use("/webhooks", clerkMiddleware(), webHookRouter);
 
-// API routes (without Clerk middleware for now)
+// Public API routes
 app.use("/users", userRouter);
 app.use("/posts", postRouter);
-app.use("/comments", commentRouter); 
+app.use("/comments", commentRouter);
 
-// Basic health check endpoint
+// Health check
 app.get("/health", (req, res) => {
-    res.status(200).json({ status: "ok", message: "Server is running" });
+  res.status(200).json({ status: "ok", message: "Server is running" });
 });
 
-// Error handling middleware
+// Global error handler
 app.use((error, req, res, next) => {
-    console.error("Global error:", error);
-    res.status(error.status || 500).json({
-        message: error.message || "Something went wrong!",
-        status: error.status || 500,
-        stack: process.env.NODE_ENV === 'production' ? '🥞' : error.stack,
-    });
+  console.error("Global error:", error);
+  res.status(error.status || 500).json({
+    message: error.message || "Something went wrong!",
+    status: error.status || 500,
+    stack: process.env.NODE_ENV === 'production' ? '🥞' : error.stack,
+  });
 });
 
+// Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+  console.log(`🚀 Server is running on port ${PORT}`);
 });
