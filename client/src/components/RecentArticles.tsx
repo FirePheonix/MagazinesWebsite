@@ -31,8 +31,9 @@ const RecentArticles: React.FC<RecentArticlesProps> = ({
     queryKey: ['recentArticles', category, limit],
     queryFn: async () => {
       try {
-        const apiUrl = `${import.meta.env.VITE_API_URL}/posts`;
-        const res = await axios.get(apiUrl);
+        // Use fallback API URL if environment variable is not set
+        const apiUrl = import.meta.env.VITE_API_URL || 'https://magazines-website.vercel.app';
+        const res = await axios.get(`${apiUrl}/posts`);
         
         // Filter and sort posts
         let filtered = res.data;

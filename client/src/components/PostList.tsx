@@ -37,8 +37,11 @@ interface Post {
 
 const fetchPosts = async ({ pageParam = 1 }) => {
   try {
+    // Use fallback API URL if environment variable is not set
+    const apiUrl = import.meta.env.VITE_API_URL || 'https://magazines-website.vercel.app';
+    
     // Check if your API supports pagination - if not, we'll handle it client-side
-    const res = await axios.get(`${import.meta.env.VITE_API_URL}/posts`, {
+    const res = await axios.get(`${apiUrl}/posts`, {
       params: {
         page: pageParam,
         limit: 5 // Fetch 5 posts per page
